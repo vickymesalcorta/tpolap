@@ -1,6 +1,6 @@
 .project
 .buildpath
 .settings/
-IssueTracket/target/
+IssueTracker/target/
 *.class
 *~
