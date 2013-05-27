@@ -1,8 +1,8 @@
-package ar.edu.itba.it.paw.dao;
+package ar.edu.itba.olap.dao;
 
 import java.util.List;
 
-import ar.edu.itba.it.paw.domain.Table;
+import ar.edu.itba.olap.domain.Table;
 
 
 public interface TablesDAO {
@@ -12,4 +12,6 @@ public interface TablesDAO {
 	public void createTable(Table table);
 	
 	public void executeQuery(String query);
+	
+	public List<String> getTableColumsNames(String tableName);
 }

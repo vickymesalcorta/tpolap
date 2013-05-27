@@ -26,11 +26,11 @@ public class UserFilter implements Filter{
 		String suburl = url.substring(url.lastIndexOf('/')+1, url.length());
 		
 		if (!suburl.equals("style.css") && !suburl.equals("tasks_icon.png")) {
-			if(session.getAttribute("user") == null && !suburl.equals("index")){
+			if(session.getAttribute("user") == null && !suburl.equals("index") && !suburl.equals("listTables")){
 				((HttpServletResponse)resp).sendRedirect("index");
 			} 
 			else if((session.getAttribute("project") == null) && !suburl.equals("select_project") && 
-					!suburl.equals("create_project")  && !suburl.equals("index")){
+					!suburl.equals("create_project")  && !suburl.equals("index") && !suburl.equals("listTables")){
 				((HttpServletResponse)resp).sendRedirect("select_project");
 			} else {
 				chain.doFilter(req, resp);
