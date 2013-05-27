@@ -4,3 +4,4 @@
 IssueTracker/target/
 *.class
 *~
+.metadata/
