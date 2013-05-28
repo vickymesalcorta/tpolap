@@ -1,4 +1,4 @@
-package olap;
+package ar.edu.itba.olap.domain;
 
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -70,7 +70,7 @@ public class Level implements Comparator<Level>, Comparable<Level>{
 		for(Property p :properties){
 			string = string.concat(p.toString());
 		}
-		return string + "\n";
+		return string + " fin level \n";
 	}
 	
 }

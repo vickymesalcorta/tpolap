@@ -1,4 +1,4 @@
-package olap;
+package ar.edu.itba.olap.domain;
 
 public class DimensionUsage {
 	

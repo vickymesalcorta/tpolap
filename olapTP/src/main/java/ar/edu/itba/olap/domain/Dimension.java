@@ -1,4 +1,4 @@
-package olap;
+package ar.edu.itba.olap.domain;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -37,13 +37,13 @@ public class Dimension {
 	}
 	
 	public String toString(){
-		String string = "\n" + "DIMENSION:name"+name+"\n";
-		string = string.concat("hierachiesList:" + "\n");
-		for (Hierachy p : hierachies) {
+		String string = "\n" + "DIMENSION: name: "+name+"\n";
+		string = string.concat("Dimension's levelsList:" + "\n");
+		for (Level p : levels) {
 			string = string.concat(p.toString() + "\n");
 		}
-		string = string.concat("levelsList:" + "\n");
-		for (Level p : levels) {
+		string = string.concat("hierachiesList:" + "\n");
+		for (Hierachy p : hierachies) {
 			string = string.concat(p.toString() + "\n");
 		}
 		
