@@ -2,10 +2,7 @@ package ar.edu.itba.it.paw.services;
 
 import java.util.List;
 
-import ar.edu.itba.it.paw.domain.Issue;
 import ar.edu.itba.it.paw.domain.Table;
-import ar.edu.itba.it.paw.domain.User;
-import ar.edu.itba.it.paw.domain.exceptions.RegisteredUsernameException;
 
 public interface TablesServices {
 
