@@ -3,22 +3,31 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
 
-  	<!-- <servlet>
+	<servlet>
 		<servlet-name>Index</servlet-name>
 		<servlet-class>ar.edu.itba.olap.web.Index</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Index</servlet-name>
 		<url-pattern>/index</url-pattern>
-	</servlet-mapping> -->
+	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>ListTables</servlet-name>
-		<servlet-class>ar.edu.itba.olap.web.ListTables</servlet-class>
+		<servlet-name>ListColumns</servlet-name>
+		<servlet-class>ar.edu.itba.olap.web.ListColumns</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>ListTables</servlet-name>
-		<url-pattern>/listTables</url-pattern>
+		<servlet-name>ListColumns</servlet-name>
+		<url-pattern>/listColumns</url-pattern>
 	</servlet-mapping>
+	
+	<filter>
+		<filter-name>ErrorFilter</filter-name>
+		<filter-class>ar.edu.itba.olap.web.filter.ErrorFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>ErrorFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	
 </web-app>

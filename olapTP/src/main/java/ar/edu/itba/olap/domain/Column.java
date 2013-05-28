@@ -1,35 +1,38 @@
 package ar.edu.itba.olap.domain;
 
-import java.util.List;
-
-public class Table {
-	
+public class Column {
 	private String name;
-	private List<Column> columns;
-
-	public Table(String name, List<Column> columns) throws IllegalArgumentException{
-		this.setName(name);
-		this.columns = columns;
-	}
+	private String type;
+	private boolean isPrimaryKey;
 	
+	public Column(String name, String type, boolean isPrimaryKey) {
+		this.name = name;
+		this.type = type;
+		this.isPrimaryKey = isPrimaryKey;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
-		if(name == null || name.equals("")){
-			throw new IllegalArgumentException();
-		}else{
-			this.name = name;
-		}
+		this.name = name;
 	}
 
-	public List<Column> getColumns() {
-		return columns;
+	public String getType() {
+		return type;
 	}
 
-	public void setColumns(List<Column> columns) {
-		this.columns = columns;
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public boolean isPrimaryKey() {
+		return isPrimaryKey;
+	}
+
+	public void setPrimaryKey(boolean isPrimaryKey) {
+		this.isPrimaryKey = isPrimaryKey;
 	}
 
 	@Override
@@ -48,7 +51,7 @@ public class Table {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Table other = (Table) obj;
+		Column other = (Column) obj;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -56,6 +59,4 @@ public class Table {
 			return false;
 		return true;
 	}
-
-	
 }

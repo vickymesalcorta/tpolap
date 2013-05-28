@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ar.edu.itba.olap.dao.TablesDAO;
+import ar.edu.itba.olap.domain.Column;
 import ar.edu.itba.olap.domain.ConnectionManager;
 import ar.edu.itba.olap.domain.Table;
 import ar.edu.itba.olap.domain.exceptions.DatabaseException;
@@ -31,7 +32,7 @@ public class DatabaseTablesDAO implements TablesDAO {
 		List<String> tables = new LinkedList<String>();
 		
 		try {
-			stmt = conn.prepareStatement("select * from information_schema.tables where table_type = 'BASE TABLE' and table_schema = 'public'");
+			stmt = conn.prepareStatement("select * from information_schema.tables where table_type = 'BASE TABLE' and table_schema = 'public' and table_name != 'spatial_ref_sys'");
 			ResultSet cur = stmt.executeQuery();
 			
 			
@@ -75,8 +76,18 @@ public class DatabaseTablesDAO implements TablesDAO {
 
 	@Override
 	public void createTable(Table table) {
-		// TODO Auto-generated method stub
+		ConnectionManager manager = ConnectionManager.getInstance();
+		Connection conn = manager.getConnection();
+		PreparedStatement stmt;
 		
+		try {
+			stmt = conn.prepareStatement(this.getQueryForTableCreation(table));
+			stmt.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DatabaseException();
+		}
+		manager.closeConnection();
 	}
 
 
@@ -121,4 +132,56 @@ public class DatabaseTablesDAO implements TablesDAO {
 		manager.closeConnection();
 		return columns;
 	}
+	
+	private String getQueryForTableCreation(Table table) {
+		StringBuilder str = new StringBuilder();
+		
+		str.append("CREATE TABLE ");
+		str.append(table.getName());
+		str.append("(");
+		
+		List<Column> columns = table.getColumns();
+		
+		int i = 1;
+		for(Column column : columns) {
+			str.append(column.getName());
+			str.append(" ");
+			str.append(column.getType());
+			if(column.isPrimaryKey()) {
+				str.append(" ");
+				str.append("primary key");
+			}
+			if(i != columns.size()) {
+				str.append(",");
+			}
+			i++;
+		}
+		
+		str.append(");");
+		
+		return str.toString();
+	}
+	
+//	public static void main(String[] args) {
+//		TablesDAO tablesDAO = DatabaseTablesDAO.getInstance();
+//		
+////		CREATE TABLE sensitive_areas (
+////			area_id integer primary key, 
+////			name varchar(128), 
+////			zone geometry
+////		);
+//		
+//		Column c1 = new Column("area_id", "integer", true);
+//		Column c2 = new Column("name", "varchar(128)", false);
+//		Column c3 = new Column("zone", "geometry", false);
+//		
+//		List<Column> columns = new LinkedList<Column>();
+//		columns.add(c1);
+//		columns.add(c2);
+//		columns.add(c3);
+//		
+//		Table table = new Table("sensitive_areas", columns);
+//		
+//		tablesDAO.createTable(table);
+//	}
 }

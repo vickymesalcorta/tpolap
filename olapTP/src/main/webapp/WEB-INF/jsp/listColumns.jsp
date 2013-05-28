@@ -1,20 +1,10 @@
 <%@ include file="header.jsp"%>
 <div id="content">
-<h2>Listado de tablas y columnas</h2>
+<h2>Listado de columnas de la tabla <c:out value="${uniqueTable}" /></h2>
 <p><c:out value="${message}" /></p>
 	<table id="list">
 		<tr>
-			<th>Tablas</th>
-		</tr>
-		<c:forEach items="${tables}" var="table">
-			<tr>
-				<td><c:out value="${table}"/></td>
-			</tr>
-		</c:forEach>
-	</table>
-	<table id="list">
-		<tr>
-			<th>Columnas de usuarios</th>
+			<th>Columnas de la tabla <c:out value="${uniqueTable}" /></th>
 		</tr>
 		<c:forEach items="${columns}" var="column">
 			<tr>

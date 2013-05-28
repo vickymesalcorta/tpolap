@@ -10,38 +10,38 @@
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
-
-	<div id="logo">
-		<img alt="." src="./img/tasks_icon.png">
-	</div>
-	
-	<div id="login">
-		<h2>Bienvenido a ITrack</h2>
-		<form action="index" method="post">
-			<fieldset id="marcoLogin">
-				<c:forEach items="${errors}" var="error">
-					<p>
-						<em><c:out value="${error}" /></em>
-					</p>
-				</c:forEach>
-				<br>
-				<legend>Ingrese los siguientes datos para el logueo</legend>
+	<div id="content">
+	<h2>Cree el MDX XML creando las tablas automaticamente pulsando el siguiente boton</h2>
+	<form action="createXML" method="POST">
+		<fieldset id="marcoLogin">
+			<td><input type="submit" value="Crear automaticamente" /></td>
+		</fieldset>
+	</form>
+		
+	<h2>O cree el MDX XML seleccionando la tabla deseada de la base de datos proporcionada</h2>
+	<p><c:out value="${message}" /></p>
+	<c:if test="${tables == null}">
+		<h3>No existe ninguna tabla en la base de datos proporcionada</h3>
+	</c:if>
+		<c:if test="${tables != null}">
+			<form action="listColumns" method="POST">
+				<fieldset id="marcoLogin">
 					<table>
 						<tr>
-							<td><strong>Usuario</strong></td>
-							<td><input type="text" value="${input_user}" name="username" /></td>
+							<select name="table"><br>
+								<c:forEach items="${tables}" var="table">
+									<option value="${table}"><c:out value="${table}" />
+								</c:forEach>
+							</select>
 						</tr>
+						<br/>
 						<tr>
-							<td><strong>Contrase&ntilde;a</strong></td>
-							<td><input type="password"name="password" /></td>
+							<td><input type="submit" value="Aceptar" /></td>
 						</tr>
-						<tr>
-							<td></td><td><input type="submit" value="Ingresar" /></td>
-						</tr>
-						
 					</table>
-			</fieldset>
-		</form>
+					</fieldset>
+			</form>
+		</c:if>
 	</div>
 </body>
 </html>
