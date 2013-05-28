@@ -1,4 +1,4 @@
-package olap;
+package ar.edu.itba.olap.domain;
 
 import java.util.Comparator;
 import java.util.LinkedList;

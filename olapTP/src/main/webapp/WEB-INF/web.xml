@@ -13,12 +13,21 @@
 	</servlet-mapping> -->
 	
 	<servlet>
-		<servlet-name>ListTables</servlet-name>
-		<servlet-class>ar.edu.itba.olap.web.ListTables</servlet-class>
+		<servlet-name>SelectTable</servlet-name>
+		<servlet-class>ar.edu.itba.olap.web.SelectTable</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>ListTables</servlet-name>
-		<url-pattern>/listTables</url-pattern>
+		<servlet-name>SelectTable</servlet-name>
+		<url-pattern>/selectTable</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ListColumns</servlet-name>
+		<servlet-class>ar.edu.itba.olap.web.ListColumns</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ListColumns</servlet-name>
+		<url-pattern>/listColumns</url-pattern>
 	</servlet-mapping>
 	
 </web-app>
