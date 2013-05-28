@@ -32,7 +32,7 @@ public class DatabaseTablesDAO implements TablesDAO {
 		List<String> tables = new LinkedList<String>();
 		
 		try {
-			stmt = conn.prepareStatement("select * from information_schema.tables where table_type = 'BASE TABLE' and table_schema = 'public'");
+			stmt = conn.prepareStatement("select * from information_schema.tables where table_type = 'BASE TABLE' and table_schema = 'public' and table_name != 'spatial_ref_sys'");
 			ResultSet cur = stmt.executeQuery();
 			
 			

@@ -13,7 +13,7 @@ import ar.edu.itba.olap.services.TablesServices;
 import ar.edu.itba.olap.services.impl.TablesServicesImpl;
 
 @SuppressWarnings("serial")
-public class SelectTable extends HttpServlet{
+public class Index extends HttpServlet{
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		HttpSession session = req.getSession();
@@ -22,31 +22,19 @@ public class SelectTable extends HttpServlet{
 		
 		TablesServices tablesServices = TablesServicesImpl.getInstance();
 		List<String> tables = tablesServices.getTables();
-		req.setAttribute("tables", tables);
-		
-//		List<String> columns = tablesServices.getTableColmnsNames("usuarios");
-//		req.setAttribute("columns", columns);
+		if(tables.size() > 0) {
+			req.setAttribute("tables", tables);
+		} else {
+			req.setAttribute("tables", null);
+		}
 		
 		req.setAttribute("message", "Seleccione la tabla sobre la que quiere hacer el MDX");
 		
-		req.getRequestDispatcher("/WEB-INF/jsp/selectTable.jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(req, resp);
 	}
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		String uniqueTable = req.getParameter("table");
-		HttpSession session = req.getSession();
-		session.setAttribute("uniqueTable", uniqueTable);
-		
-		TablesServices tablesServices = TablesServicesImpl.getInstance();
-		
-		List<String> columns = tablesServices.getTableColmnsNames(uniqueTable);
-		req.setAttribute("columns", columns);
-		
-		req.setAttribute("uniqueTable", uniqueTable);
-		
-		req.setAttribute("message", "Columnas de la tabla " + uniqueTable);
-
-		req.getRequestDispatcher("/WEB-INF/jsp/listColumns.jsp").forward(req, resp);
+		doGet(req, resp);
 	}
 
 }
