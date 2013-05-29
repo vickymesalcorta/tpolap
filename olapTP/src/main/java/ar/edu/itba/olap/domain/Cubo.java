@@ -53,13 +53,21 @@ public class Cubo {
 		return string  + "\n";
 	}
 	
-	public Map<Dimension,String> getColumnNames(){
-		Map<Dimension,String> dim_col = new HashMap<Dimension,String>();
+	public Map<String,Dimension> getColumnNames(){
+		Map<String,Dimension> dim_col = new HashMap<String,Dimension>();
 		for(DimensionUsage d: dimensionUsages){
-			dim_col.put(d.getDimension(),d.getName());
+			dim_col.put(d.getName(),d.getDimension());
+//			System.out.println("TUPLA: "+d.getName()+" , " +d.getDimension().getName());
 		}
 		
 		return dim_col;
-		
+	}
+	
+	public List<String> getMeasuresNames(){
+		List<String> columns = new LinkedList<String>();
+		for(Measure m: measures){
+			columns.add(name + "_" + m.getName());
+		}		
+		return columns;
 	}
 }

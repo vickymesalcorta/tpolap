@@ -9,6 +9,15 @@ public class MultiDim {
 
 	private List<Dimension> dimensions;
 	private List<Cubo> cubos;
+	
+	public List<Dimension> getDimensions() {
+		return dimensions;
+	}
+
+	public List<Cubo> getCubos() {
+		return cubos;
+	}
+
 
 	public MultiDim() {
 		this.dimensions = new LinkedList<Dimension>();
@@ -39,12 +48,13 @@ public class MultiDim {
 	public List<String> getMultiDimNames(){
 		List<String> columns = new LinkedList<String>();
 		for(Cubo c: cubos){
-			Map<Dimension,String> dim_col = c.getColumnNames();		
+			columns.addAll(c.getMeasuresNames());
+			Map<String,Dimension> name = c.getColumnNames();		
 			 List<String> names = new LinkedList<String>();
-			for(Entry<Dimension,String> d: dim_col.entrySet()){
-				names.addAll(d.getKey().getColumnNames(c.getName()));
+			for(Entry<String,Dimension> d: name.entrySet()){
+				names.addAll(d.getValue().getColumnNames(c.getName()+"_"+d.getKey()+"_"));
 			}
-			
+			columns.addAll(names);
 		}
 		return columns;
 	}
