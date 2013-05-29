@@ -29,19 +29,6 @@ public class InputParser {
 		}
 		//System.out.println(multidim);
         
-        Document doc = InputParser.getDocumentFrom(multidim, null, "tableName" );
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer transformer;
-        try {
-            transformer = tf.newTransformer();
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-            StringWriter writer = new StringWriter();
-            transformer.transform(new DOMSource(doc), new StreamResult(writer));
-            String output = writer.getBuffer().toString().replaceAll("\n|\r", "");
-            System.out.println(output);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 	public static org.w3c.dom.Document loadXMLFrom(String xml)
@@ -247,30 +234,6 @@ public class InputParser {
 		return du;
 	}
 	
-	private static Document getDocumentFrom(MultiDim multidim, MultiDimToTablesDictionary dict, String tableName) {
-        try {
-            Document document = DocumentBuilderFactory.newInstance()
-                    .newDocumentBuilder().newDocument();
-            Element schema = document.createElement("Schema");
-            schema.setAttribute("name", tableName);
-            for(Cubo cubo: multidim.getCubos()){
-                Element cuboElement = document.createElement("Cube");
-                cuboElement.setAttribute("name", cubo.getName());
-                List<DimensionUsage> dimUsages = cubo.getDimensionUsage();
-                for(int i = 0; i < dimUsages.size(); i++){
-                    Dimension dim = dimUsages.get(i).getDimension();
-                    Element dimElement = document.createElement(dim.getName());
-                    dimElement.setAttribute("name", dim.getName());
-                }
-                schema.appendChild(cuboElement);
-            }
-            document.appendChild(schema);
-            return document;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 	
 	private Dimension getDimension(String ptr, List<Dimension> dims) {
         for(Dimension dim : dims){
