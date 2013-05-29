@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import ar.edu.itba.olap.domain.MultiDimToTablesDictionary;
+import ar.edu.itba.olap.domain.MultiDimToTablesDictionaryImpl;
 
 @SuppressWarnings("serial")
 public class ManageSelectedColumns extends HttpServlet{
@@ -31,7 +32,7 @@ public class ManageSelectedColumns extends HttpServlet{
 		
 		for(String multidimName : multidimNames) {
 			String columnTableName = (String) req.getParameter(multidimName);
-			MultiDimToTablesDictionary dic = new MultiDimToTablesDictionary(multidimName, columnTableName);
+			MultiDimToTablesDictionary dic = new MultiDimToTablesDictionaryImpl(multidimName, columnTableName);
 			columnsInTable.add(dic);
 		}
 		
