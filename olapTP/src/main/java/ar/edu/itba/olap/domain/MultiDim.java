@@ -64,9 +64,6 @@ public class MultiDim {
 		for(Cubo c:cubos){
 			columns.addAll(c.getColumns());
 		}
-		for(Column c: columns){
-			System.out.println(c);
-		}
 		
 		return columns;
 	}
