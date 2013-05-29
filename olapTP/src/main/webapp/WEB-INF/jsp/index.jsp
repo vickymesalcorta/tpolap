@@ -12,7 +12,7 @@
 <body>
 	<div id="content">
 	<h2>Cree el MDX XML creando las tablas automaticamente pulsando el siguiente boton</h2>
-	<form action="createXML" method="POST">
+	<form action="createAutomaticOutput" method="POST">
 		<fieldset id="marcoLogin">
 			<td><input type="submit" value="Crear automaticamente" /></td>
 		</fieldset>
