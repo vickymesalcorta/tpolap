@@ -38,6 +38,11 @@ form em {
   font-style: normal;
   color: #f00;
 }
+#em {
+  font-weight: bold;
+  font-style: normal;
+  color: #f00;
+}
 form label {
   width: 120px; /* Width of labels */
 }

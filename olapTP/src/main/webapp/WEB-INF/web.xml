@@ -30,6 +30,15 @@
 		<url-pattern>/manageSelectedColumns</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>CreateAutomaticOutput</servlet-name>
+		<servlet-class>ar.edu.itba.olap.web.CreateAutomaticOutput</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateAutomaticOutput</servlet-name>
+		<url-pattern>/createAutomaticOutput</url-pattern>
+	</servlet-mapping>
+	
 	<filter>
 		<filter-name>ErrorFilter</filter-name>
 		<filter-class>ar.edu.itba.olap.web.filter.ErrorFilter</filter-class>
