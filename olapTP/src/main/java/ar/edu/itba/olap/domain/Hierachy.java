@@ -43,4 +43,12 @@ public class Hierachy {
 		}		
 		return columns;
 	}
+	
+	public List<Column> getColumns(String before){
+		List<Column> columns = new LinkedList<Column>();
+		for(Level l: levels){
+			columns.addAll(l.getColumns(before));
+		}
+		return columns;
+	}
 }

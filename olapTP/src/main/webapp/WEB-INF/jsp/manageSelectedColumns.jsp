@@ -1,7 +1,7 @@
 <%@ include file="header.jsp"%>
 <div id="content">
-<h2>Su archivo esta listo</h2>
 <p><c:out value="${message}" /></p>
+<p><div style="color:#FF0000;"><c:out value="${columnTypeWrong}"/></div></p>
 	<c:forEach items="${columnsInTable}" var="columnInTable">
 		<div>
 			<c:out value="${columnInTable.multidimName}" />

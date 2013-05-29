@@ -57,7 +57,6 @@ public class Cubo {
 		Map<String,Dimension> dim_col = new HashMap<String,Dimension>();
 		for(DimensionUsage d: dimensionUsages){
 			dim_col.put(d.getName(),d.getDimension());
-//			System.out.println("TUPLA: "+d.getName()+" , " +d.getDimension().getName());
 		}
 		
 		return dim_col;
@@ -68,6 +67,18 @@ public class Cubo {
 		for(Measure m: measures){
 			columns.add(name + "_" + m.getName());
 		}		
+		return columns;
+	}
+	
+	public List<Column> getColumns(){
+		List<Column> columns = new LinkedList<Column>();
+		
+		for(Measure m: measures){
+			columns.add(m.getColumn());
+		}
+		for(DimensionUsage d: dimensionUsages){
+			columns.addAll(d.getColumns());
+		}
 		return columns;
 	}
 }

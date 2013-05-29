@@ -2,6 +2,7 @@ package ar.edu.itba.olap.services;
 
 import java.util.List;
 
+import ar.edu.itba.olap.domain.Column;
 import ar.edu.itba.olap.domain.Table;
 
 public interface TablesServices {
@@ -21,6 +22,8 @@ public interface TablesServices {
 	public List<String> getTables();
 	
 	public List<String> getTableColmnsNames(String tableName);
+	
+	public List<Column> getTableColmns(String tableName);
 	
 	public void createTable(Table table);
 	

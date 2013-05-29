@@ -8,7 +8,7 @@ fabrica_rubro_tipoDesc varchar(30),
 fabrica_ciudad_nombre varchar(30),
 fabrica_ciudad_poblacion numeric,
 fabrica_pais_nombre varchar(30),
-fabrica_pais_the_geom Integer,
+fabrica_pais_the_geom geometry,
 inicio_temporal_dia Timestamp,
 inicio_month_mes varchar(30),
 inicio_month_nombre varchar(30), 
@@ -23,5 +23,5 @@ sustanciaDim_sustancia_denominacion varchar(30),
 emision numeric,
 emisionMala numeric,
 nube integer,
-primary key(emision, emisionMala, nube)
+primary key(fabrica_fabrica_latLon , inicio_temporal_dia, fin_temporal_dia, sustanciaDim_sustancia_denominacion)
 );

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ar.edu.itba.olap.domain.Column;
 import ar.edu.itba.olap.domain.InputParser;
 import ar.edu.itba.olap.domain.MultiDim;
 import ar.edu.itba.olap.domain.MultiDimToTablesDictionary;
@@ -31,7 +32,7 @@ public class CreateAutomaticOutput extends HttpServlet{
 		
 		InputParser inputParser = new InputParser();
 		MultiDim multidim = inputParser.getMultiDim(new File("input.xml"));
-		List<String> multidimNames = multidim.getMultiDimNames();
+		List<Column> multidimColumns = multidim.getColumns();
 		
 //		List<String> multidimNames = new LinkedList<String>();
 //		multidimNames.add("asdf1");
@@ -45,8 +46,8 @@ public class CreateAutomaticOutput extends HttpServlet{
 		
 		List<MultiDimToTablesDictionary> columnsInTable = new LinkedList<MultiDimToTablesDictionary>();
 		
-		for(String multidimName : multidimNames) {
-			MultiDimToTablesDictionaryDummy dic = new MultiDimToTablesDictionaryDummy(multidimName);
+		for(Column multidimColumn : multidimColumns) {
+			MultiDimToTablesDictionaryDummy dic = new MultiDimToTablesDictionaryDummy(multidimColumn.getName());
 			columnsInTable.add(dic);
 		}
 		

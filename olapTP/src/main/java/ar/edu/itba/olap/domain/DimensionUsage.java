@@ -1,5 +1,8 @@
 package ar.edu.itba.olap.domain;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class DimensionUsage {
 	
 	private String name;
@@ -33,6 +36,12 @@ public class DimensionUsage {
 
 	public void setPtr(String ptr) {
 		this.ptr = ptr;
+	}
+	
+	public List<Column> getColumns(){
+		List<Column> columns = new LinkedList<Column>();
+		columns.addAll(dimension.getColumns(name+"_"));
+		return columns;		
 	}
 	
 	public String toString(){
