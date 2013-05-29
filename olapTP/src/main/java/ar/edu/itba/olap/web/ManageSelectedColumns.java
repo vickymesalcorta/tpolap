@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ar.edu.itba.olap.domain.MultiDim;
 import ar.edu.itba.olap.domain.MultiDimToTablesDictionary;
 import ar.edu.itba.olap.domain.MultiDimToTablesDictionaryImpl;
 import ar.edu.itba.olap.domain.OutputGenerator;
@@ -39,8 +40,10 @@ public class ManageSelectedColumns extends HttpServlet{
 		
 		req.setAttribute("columnsInTable", columnsInTable);
 		
+		MultiDim multidim = (MultiDim) session.getAttribute("multidim");
+		
 		OutputGenerator outputGenerator = new OutputGenerator();
-		outputGenerator.generateOutput(columnsInTable, null, tableName);
+		outputGenerator.generateOutput(columnsInTable, multidim, tableName);
 		
 		req.getRequestDispatcher("/WEB-INF/jsp/manageSelectedColumns.jsp").forward(req, resp);
 	}
