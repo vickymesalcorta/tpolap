@@ -1,7 +1,9 @@
 package ar.edu.itba.olap.domain;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 
 public class Cubo {
@@ -49,5 +51,15 @@ public class Cubo {
 		}
 		
 		return string  + "\n";
+	}
+	
+	public Map<Dimension,String> getColumnNames(){
+		Map<Dimension,String> dim_col = new HashMap<Dimension,String>();
+		for(DimensionUsage d: dimensionUsages){
+			dim_col.put(d.getDimension(),d.getName());
+		}
+		
+		return dim_col;
+		
 	}
 }

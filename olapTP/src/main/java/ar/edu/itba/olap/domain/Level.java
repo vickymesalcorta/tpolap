@@ -73,4 +73,13 @@ public class Level implements Comparator<Level>, Comparable<Level>{
 		return string + " fin level \n";
 	}
 	
+	public List<String>getColumnNames(String dimName){
+		List<String> columns = new LinkedList<String>();
+		String before = dimName.concat("_"+name+"_");
+		for(Property p: properties){
+			columns.add(before.concat(p.getName()));
+		}
+		return columns;
+	}
+	
 }

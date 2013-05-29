@@ -1,6 +1,7 @@
 package ar.edu.itba.olap.domain;
 
 import java.io.File;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,6 +15,11 @@ public class InputParser {
 	public static void main(String[] args) {
 		InputParser ip = new InputParser();
 		MultiDim multidim = ip.getMultiDim(new File("input.xml"));
+		List<String> columns = multidim.getMultiDimNames();
+		System.out.println("Columns:"+'\n');
+		for(String s: columns){
+			System.out.println(s + '\n');
+		}
 		System.out.println(multidim);
 	}
 
@@ -140,7 +146,7 @@ public class InputParser {
 	public Property getProperty(Node node) {
 		String type = null;
 		boolean id = false;
-		String name = node.getFirstChild().getNodeValue();
+		String name = node.getFirstChild().getNodeValue().trim();
 		Node aux = node.getAttributes().getNamedItem("type");
 		if (aux != null) {
 			type = aux.getNodeValue();

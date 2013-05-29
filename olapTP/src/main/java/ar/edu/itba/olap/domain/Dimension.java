@@ -49,4 +49,16 @@ public class Dimension {
 		
 		return string  + "\n";
 	}
+	
+	public List<String> getColumnNames(String cuboName){
+		List<String> columns = new LinkedList<String>();
+		String before = cuboName +"_"+ name +"_";
+		for(Level l: levels){
+			columns.addAll(l.getColumnNames(before));			
+		}
+		for(Hierachy h:hierachies){
+			columns.addAll(h.getColumnNames(before));
+		}		
+		return columns;
+	}
 }

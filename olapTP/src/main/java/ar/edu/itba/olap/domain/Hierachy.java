@@ -1,5 +1,7 @@
 package ar.edu.itba.olap.domain;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -32,5 +34,13 @@ public class Hierachy {
 			string = string.concat(p.toString());
 		}
 		return string  + "\n";
+	}
+	
+	public List<String> getColumnNames(String dimName){
+		List<String> columns = new LinkedList<String>();
+		for(Level l: levels){
+			columns.addAll(l.getColumnNames(dimName));			
+		}		
+		return columns;
 	}
 }
