@@ -13,12 +13,21 @@
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>ListColumns</servlet-name>
-		<servlet-class>ar.edu.itba.olap.web.ListColumns</servlet-class>
+		<servlet-name>SelectColumns</servlet-name>
+		<servlet-class>ar.edu.itba.olap.web.SelectColumns</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>ListColumns</servlet-name>
-		<url-pattern>/listColumns</url-pattern>
+		<servlet-name>SelectColumns</servlet-name>
+		<url-pattern>/selectColumns</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ManageSelectedColumns</servlet-name>
+		<servlet-class>ar.edu.itba.olap.web.ManageSelectedColumns</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ManageSelectedColumns</servlet-name>
+		<url-pattern>/manageSelectedColumns</url-pattern>
 	</servlet-mapping>
 	
 	<filter>

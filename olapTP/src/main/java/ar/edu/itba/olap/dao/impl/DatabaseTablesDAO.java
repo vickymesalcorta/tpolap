@@ -134,32 +134,45 @@ public class DatabaseTablesDAO implements TablesDAO {
 	}
 	
 	private String getQueryForTableCreation(Table table) {
-		StringBuilder str = new StringBuilder();
+		StringBuilder query = new StringBuilder();
 		
-		str.append("CREATE TABLE ");
-		str.append(table.getName());
-		str.append("(");
+		query.append("CREATE TABLE ");
+		query.append(table.getName());
+		query.append("(");
+		
+		StringBuilder primaryKeys = new StringBuilder();
+		primaryKeys.append(",PRIMARY KEY(");
 		
 		List<Column> columns = table.getColumns();
 		
 		int i = 1;
+		boolean thereIsAPrimaryKey = false;
 		for(Column column : columns) {
-			str.append(column.getName());
-			str.append(" ");
-			str.append(column.getType());
+			query.append(column.getName());
+			query.append(" ");
+			query.append(column.getType());
 			if(column.isPrimaryKey()) {
-				str.append(" ");
-				str.append("primary key");
+				thereIsAPrimaryKey = true;
+				primaryKeys.append(column.getName());
+				primaryKeys.append(",");
 			}
 			if(i != columns.size()) {
-				str.append(",");
+				query.append(",");
 			}
 			i++;
 		}
 		
-		str.append(");");
 		
-		return str.toString();
+		if(thereIsAPrimaryKey) {
+			String pks = primaryKeys.substring(0, primaryKeys.length() - 1);
+			query.append(pks);
+			query.append(")");
+		}
+		query.append(");");
+		
+//		System.out.println(query.toString());
+		
+		return query.toString();
 	}
 	
 //	public static void main(String[] args) {
@@ -172,7 +185,7 @@ public class DatabaseTablesDAO implements TablesDAO {
 ////		);
 //		
 //		Column c1 = new Column("area_id", "integer", true);
-//		Column c2 = new Column("name", "varchar(128)", false);
+//		Column c2 = new Column("name", "varchar(128)", true);
 //		Column c3 = new Column("zone", "geometry", false);
 //		
 //		List<Column> columns = new LinkedList<Column>();
