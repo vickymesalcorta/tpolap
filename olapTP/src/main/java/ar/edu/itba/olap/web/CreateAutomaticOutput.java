@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import ar.edu.itba.olap.domain.MultiDimToTablesDictionary;
 import ar.edu.itba.olap.domain.MultiDimToTablesDictionaryDummy;
+import ar.edu.itba.olap.domain.OutputGenerator;
 
 @SuppressWarnings("serial")
 public class CreateAutomaticOutput extends HttpServlet{
@@ -43,6 +44,9 @@ public class CreateAutomaticOutput extends HttpServlet{
 		}
 		
 		req.setAttribute("columnsInTable", columnsInTable);
+		
+		OutputGenerator outputGenerator = new OutputGenerator();
+		outputGenerator.generateOutput(columnsInTable, null, null);
 		
 		req.getRequestDispatcher("/WEB-INF/jsp/manageSelectedColumns.jsp").forward(req, resp);
 	}
