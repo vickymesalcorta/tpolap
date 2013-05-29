@@ -133,6 +133,32 @@ public class DatabaseTablesDAO implements TablesDAO {
 		return columns;
 	}
 	
+	@Override
+	public List<Column> getTableColums(String tableName) {
+//		select column_name from information_schema.columns where table_name='usuarios';
+		ConnectionManager manager = ConnectionManager.getInstance();
+		Connection conn = manager.getConnection();
+		PreparedStatement stmt;
+		List<Column> columns = new LinkedList<Column>();
+		
+		try {
+			stmt = conn.prepareStatement("select column_name, data_type from information_schema.columns where table_name=?");
+			stmt.setString(1, tableName);
+			ResultSet cur = stmt.executeQuery();
+			
+			while(cur.next()){
+				Column column = new Column(cur.getString("column_name"), cur.getString("data_type"), false, false);
+				columns.add(column);
+			}
+			
+			manager.closeConnection();
+		} catch(Exception e){
+			throw new DatabaseException();
+		}
+		manager.closeConnection();
+		return columns;
+	}
+	
 	private String getQueryForTableCreation(Table table) {
 		StringBuilder query = new StringBuilder();
 		
@@ -174,6 +200,8 @@ public class DatabaseTablesDAO implements TablesDAO {
 		
 		return query.toString();
 	}
+
+
 	
 //	public static void main(String[] args) {
 //		TablesDAO tablesDAO = DatabaseTablesDAO.getInstance();
@@ -184,17 +212,22 @@ public class DatabaseTablesDAO implements TablesDAO {
 ////			zone geometry
 ////		);
 //		
-//		Column c1 = new Column("area_id", "integer", true);
-//		Column c2 = new Column("name", "varchar(128)", true);
-//		Column c3 = new Column("zone", "geometry", false);
+////		Column c1 = new Column("area_id", "integer", true);
+////		Column c2 = new Column("name", "varchar(128)", true);
+////		Column c3 = new Column("zone", "geometry", false);
+////		
+////		List<Column> columns = new LinkedList<Column>();
+////		columns.add(c1);
+////		columns.add(c2);
+////		columns.add(c3);
+////		
+////		Table table = new Table("sensitive_areas", columns);
+////		
+////		tablesDAO.createTable(table);
 //		
-//		List<Column> columns = new LinkedList<Column>();
-//		columns.add(c1);
-//		columns.add(c2);
-//		columns.add(c3);
-//		
-//		Table table = new Table("sensitive_areas", columns);
-//		
-//		tablesDAO.createTable(table);
+//		List<Column> cols = tablesDAO.getTableColums("contaminacion");
+//		for(Column c : cols) {
+//			System.out.println(c.getName() + " " + c.getType());
+//		}
 //	}
 }

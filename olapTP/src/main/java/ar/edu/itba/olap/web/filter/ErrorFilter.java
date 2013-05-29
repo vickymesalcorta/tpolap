@@ -30,6 +30,7 @@ public class ErrorFilter implements Filter {
 		try {
 			chain.doFilter(req, resp);
 		} catch (RuntimeException e) {
+			e.printStackTrace();
 			req.setAttribute("error_message", "Ha ocurrido un error");
 			req.setAttribute("errorStackTrace", e.toString());
 			req.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(req, resp);

@@ -4,6 +4,7 @@ import java.util.List;
 
 import ar.edu.itba.olap.dao.TablesDAO;
 import ar.edu.itba.olap.dao.impl.DatabaseTablesDAO;
+import ar.edu.itba.olap.domain.Column;
 import ar.edu.itba.olap.domain.Table;
 import ar.edu.itba.olap.services.TablesServices;
 
@@ -79,5 +80,10 @@ public class TablesServicesImpl implements TablesServices {
 	@Override
 	public List<String> getTableColmnsNames(String tableName) {
 		return tablesDAO.getTableColumsNames(tableName);
+	}
+	
+	@Override
+	public List<Column> getTableColmns(String tableName) {
+		return tablesDAO.getTableColums(tableName);
 	}
 }

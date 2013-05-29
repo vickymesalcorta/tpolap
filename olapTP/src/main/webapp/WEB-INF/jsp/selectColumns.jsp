@@ -4,12 +4,13 @@
 <p><c:out value="${message}" /></p>
 	<form action="manageSelectedColumns" method="POST">
 		<fieldset id="marcoLogin">
-			<c:forEach items="${multidimNames}" var="multidimName">
+			<c:forEach items="${multidimColumns}" var="multidimColumn">
 				<div>
-					<c:out value="${multidimName}" />
-					<select name="${multidimName}">
+					<c:out value="${multidimColumn.name}" />:
+					</br>
+					<select name="${multidimColumn.name}">
 						<c:forEach items="${columns}" var="column">
-							<option value="${column}"><c:out value="${column}" />
+							<option value="${column.name}"><c:out value="${column.name}" />
 						</c:forEach>
 					</select>
 				</div>
