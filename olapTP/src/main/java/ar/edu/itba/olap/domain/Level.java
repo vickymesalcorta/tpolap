@@ -82,4 +82,12 @@ public class Level implements Comparator<Level>, Comparable<Level>{
 		return columns;
 	}
 	
+	public List<Column> getColumns(String before){
+		List<Column> columns = new LinkedList<Column>();
+		for(Property p: properties){
+			columns.add(p.getColumn(before + name + "_"));
+		}		
+		return columns;
+	}
+	
 }

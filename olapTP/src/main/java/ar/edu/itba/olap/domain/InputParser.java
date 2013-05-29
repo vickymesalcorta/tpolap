@@ -22,12 +22,13 @@ public class InputParser {
 	public static void main(String[] args) {
         InputParser ip = new InputParser();
         MultiDim multidim = ip.getMultiDim(new File("input.xml"));
-		List<String> columns = multidim.getMultiDimNames();
+		List<Column> columns = multidim.getColumns();
 		System.out.println("Columns:"+'\n');
-		for(String s: columns){
-			System.out.println(s + '\n');
-		}
-		//System.out.println(multidim);
+//		for(String s: columns){
+//			System.out.println(s + '\n');
+//		}
+//		System.out.println(multidim);
+		
         
         Document doc = InputParser.getDocumentFrom(multidim, null, "tableName" );
         TransformerFactory tf = TransformerFactory.newInstance();
@@ -115,7 +116,7 @@ public class InputParser {
 			// Aqui voy a tener un elemento
 			if (child.getNodeType() == Node.ELEMENT_NODE) {
 				if (child.getNodeName().equals("level")) {
-					Level level = this.getLevel(child, dim.getName());
+					Level level = this.getLevel(child, dim.getName(),true);
 					dim.addLevel(level);
 				} else if (child.getNodeName().equals("hierarchy")) {
 					Hierachy hierachy = this.getHierachy(child);
@@ -128,7 +129,7 @@ public class InputParser {
 		return dim;
 	}
 
-	public Level getLevel(Node node, String dimName) {
+	public Level getLevel(Node node, String dimName, boolean isPrimaryKey) {
 		Level level;
 		Node nodeName = node.getAttributes().getNamedItem("name");
 		Node nodePos = node.getAttributes().getNamedItem("pos");
@@ -143,7 +144,7 @@ public class InputParser {
 			Node child = node.getChildNodes().item(i);
 			if (child.getNodeType() == Node.ELEMENT_NODE
 					&& child.getNodeName().equals("property")) {
-				Property property = this.getProperty(child);
+				Property property = this.getProperty(child, isPrimaryKey);
 				level.addProperty(property);
 			}
 		}
@@ -163,7 +164,7 @@ public class InputParser {
 			Node child = node.getChildNodes().item(i);
 			if (child.getNodeType() == Node.ELEMENT_NODE
 					&& child.getNodeName().equals("level")) {
-				Level level = this.getLevel(child, null);
+				Level level = this.getLevel(child, null, false);
 				hierachy.addLevel(level);
 			}
 		}
@@ -171,7 +172,7 @@ public class InputParser {
 		return hierachy;
 	}
 
-	public Property getProperty(Node node) {
+	public Property getProperty(Node node, boolean isPrimaryKey) {
 		String type = null;
 		boolean id = false;
 		String name = node.getFirstChild().getNodeValue().trim();
@@ -183,7 +184,7 @@ public class InputParser {
 		if (aux != null) {
 			id = aux.getNodeValue().equals("true");
 		}
-		Property property = new Property(name, type, id);
+		Property property = new Property(name, type, id, isPrimaryKey && id);
 
 		return property;
 	}

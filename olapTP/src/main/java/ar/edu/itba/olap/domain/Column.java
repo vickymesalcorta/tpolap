@@ -4,11 +4,13 @@ public class Column {
 	private String name;
 	private String type;
 	private boolean isPrimaryKey;
+	private boolean notNull;
 	
-	public Column(String name, String type, boolean isPrimaryKey) {
+	public Column(String name, String type, boolean isPrimaryKey, boolean notNull) {
 		this.name = name;
 		this.type = type;
 		this.isPrimaryKey = isPrimaryKey;
+		this.notNull = notNull;
 	}
 
 	public String getName() {
@@ -21,6 +23,14 @@ public class Column {
 
 	public String getType() {
 		return type;
+	}
+
+	public boolean isNotNull() {
+		return notNull;
+	}
+
+	public void setNotNull(boolean notNull) {
+		this.notNull = notNull;
 	}
 
 	public void setType(String type) {
@@ -58,5 +68,9 @@ public class Column {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+	
+	public String toString(){
+		return "COLUMN: name: " + name + "  -  type: " + type + "  -  primaryKey: " + isPrimaryKey + "  -  notNul: " + notNull + "\n";
 	}
 }

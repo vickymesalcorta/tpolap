@@ -59,4 +59,16 @@ public class MultiDim {
 		return columns;
 	}
 	
+	public List<Column> getColumns(){
+		List<Column> columns = new LinkedList<Column>();
+		for(Cubo c:cubos){
+			columns.addAll(c.getColumns());
+		}
+		for(Column c: columns){
+			System.out.println(c);
+		}
+		
+		return columns;
+	}
+	
 }
