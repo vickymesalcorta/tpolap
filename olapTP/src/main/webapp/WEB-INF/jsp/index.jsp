@@ -24,7 +24,7 @@
 		<h3>No existe ninguna tabla en la base de datos proporcionada</h3>
 	</c:if>
 		<c:if test="${tables != null}">
-			<form action="listColumns" method="POST">
+			<form action="selectColumns" method="POST">
 				<fieldset id="marcoLogin">
 					<table>
 						<tr>
