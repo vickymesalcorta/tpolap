@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ar.edu.itba.olap.domain.MultiDim;
 import ar.edu.itba.olap.domain.MultiDimToTablesDictionary;
 import ar.edu.itba.olap.domain.MultiDimToTablesDictionaryImpl;
+import ar.edu.itba.olap.domain.OutputGenerator;
 
 @SuppressWarnings("serial")
 public class ManageSelectedColumns extends HttpServlet{
@@ -25,7 +27,7 @@ public class ManageSelectedColumns extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		req.setAttribute("message", "Su archivo esta listo");
 		HttpSession session = req.getSession();
-		
+		String tableName = (String) session.getAttribute("uniqueTable");
 		List<String> multidimNames = (List<String>) session.getAttribute("multidimNames");
 		
 		List<MultiDimToTablesDictionary> columnsInTable = new LinkedList<MultiDimToTablesDictionary>();
@@ -37,6 +39,11 @@ public class ManageSelectedColumns extends HttpServlet{
 		}
 		
 		req.setAttribute("columnsInTable", columnsInTable);
+		
+		MultiDim multidim = (MultiDim) session.getAttribute("multidim");
+		
+		OutputGenerator outputGenerator = new OutputGenerator();
+		outputGenerator.generateOutput(columnsInTable, multidim, tableName);
 		
 		req.getRequestDispatcher("/WEB-INF/jsp/manageSelectedColumns.jsp").forward(req, resp);
 	}
