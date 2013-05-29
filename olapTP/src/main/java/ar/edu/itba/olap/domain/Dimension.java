@@ -37,16 +37,28 @@ public class Dimension {
 	}
 	
 	public String toString(){
-		String string = "\n" + "DIMENSION:name"+name+"\n";
+		String string = "\n" + "DIMENSION: name: "+name+"\n";
+		string = string.concat("Dimension's levelsList:" + "\n");
+		for (Level p : levels) {
+			string = string.concat(p.toString() + "\n");
+		}
 		string = string.concat("hierachiesList:" + "\n");
 		for (Hierachy p : hierachies) {
 			string = string.concat(p.toString() + "\n");
 		}
-		string = string.concat("levelsList:" + "\n");
-		for (Level p : levels) {
-			string = string.concat(p.toString() + "\n");
-		}
 		
 		return string  + "\n";
+	}
+	
+	public List<String> getColumnNames(String cuboName){
+		List<String> columns = new LinkedList<String>();
+		String before = cuboName +"_"+ name +"_";
+		for(Level l: levels){
+			columns.addAll(l.getColumnNames(before));			
+		}
+		for(Hierachy h:hierachies){
+			columns.addAll(h.getColumnNames(before));
+		}		
+		return columns;
 	}
 }
