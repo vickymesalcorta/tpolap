@@ -1,6 +1,10 @@
 package ar.edu.itba.olap.domain;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.StringWriter;
 import java.util.List;
 
@@ -109,20 +113,23 @@ public class OutputGenerator {
 			StringWriter writer = new StringWriter();
 			transformer.transform(new DOMSource(document), new StreamResult(writer));
 			String output = writer.getBuffer().toString().replaceAll("\n|\r", "");
-			System.out.println(output);
-			System.out.println(multidim);
+//			System.out.println(output);
+			FileWriter fw = new FileWriter(new File("geomondrian.xml"));
+			fw.write(output);
+			fw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	private String getColumnName(List<MultiDimToTablesDictionary> multidimToTables, String multidimName) {
-		for(MultiDimToTablesDictionary dic : multidimToTables) {
-			if(dic.getMultidimName().equalsIgnoreCase(multidimName)) {
-				return dic.getColumnName();
-			}
-		}
-		throw new IllegalArgumentException();
+		return multidimName;
+//		for(MultiDimToTablesDictionary dic : multidimToTables) {
+//			if(dic.getMultidimName().equalsIgnoreCase(multidimName)) {
+//				return dic.getColumnName();
+//			}
+//		}
+//		throw new IllegalArgumentException();
 	}
 
 	private String makeFirstCharUpper(String actualName) {
