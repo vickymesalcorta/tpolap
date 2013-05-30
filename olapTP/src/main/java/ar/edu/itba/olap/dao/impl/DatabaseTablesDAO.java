@@ -177,6 +177,10 @@ public class DatabaseTablesDAO implements TablesDAO {
 			query.append(column.getName());
 			query.append(" ");
 			query.append(column.getType());
+			if(column.isNotNull()) {
+				query.append(" ");
+				query.append("NOT NULL");
+			}
 			if(column.isPrimaryKey()) {
 				thereIsAPrimaryKey = true;
 				primaryKeys.append(column.getName());

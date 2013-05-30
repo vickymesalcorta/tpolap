@@ -11,12 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ar.edu.itba.olap.dao.TablesDAO;
+import ar.edu.itba.olap.dao.impl.DatabaseTablesDAO;
 import ar.edu.itba.olap.domain.Column;
 import ar.edu.itba.olap.domain.InputParser;
 import ar.edu.itba.olap.domain.MultiDim;
 import ar.edu.itba.olap.domain.MultiDimToTablesDictionary;
 import ar.edu.itba.olap.domain.MultiDimToTablesDictionaryDummy;
 import ar.edu.itba.olap.domain.OutputGenerator;
+import ar.edu.itba.olap.domain.Table;
 
 @SuppressWarnings("serial")
 public class CreateAutomaticOutput extends HttpServlet{
@@ -27,6 +30,8 @@ public class CreateAutomaticOutput extends HttpServlet{
 	
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		TablesDAO tablesDAO = DatabaseTablesDAO.getInstance();
+		
 		req.setAttribute("message", "Su archivo esta listo");
 		HttpSession session = req.getSession();
 		
@@ -54,11 +59,44 @@ public class CreateAutomaticOutput extends HttpServlet{
 		req.setAttribute("columnsInTable", columnsInTable);
 		
 		//TODO: generate table with columns
+		String tableName = multidim.getCubos().get(0).getName();
+		Table table = createTable(tableName, multidimColumns);
+		
+		tablesDAO.createTable(table);
 		
 		OutputGenerator outputGenerator = new OutputGenerator();
 		outputGenerator.generateOutput(columnsInTable, multidim, "table");
 		
 		req.getRequestDispatcher("/WEB-INF/jsp/manageSelectedColumns.jsp").forward(req, resp);
+	}
+	
+	private Table createTable(String tableName, List<Column> columns) {
+		List<Column> tableColumns = new LinkedList<Column>();
+		
+		for(Column column : columns) {
+			String type = getType(column.getType());
+			Column tableColumn = new Column(column.getName(), type, column.isPrimaryKey(), column.isNotNull());
+			tableColumns.add(tableColumn);
+		}
+		
+		Table table = new Table(tableName, tableColumns);
+		return table;
+	}
+
+	private String getType(String type) {
+		if(type.equalsIgnoreCase("numeric")) {
+			return "numeric";
+		}
+		if(type.equalsIgnoreCase("string")) {
+			return "varchar(50)";
+		}
+		if(type.equalsIgnoreCase("timestamp")) {
+			return "timestamp";
+		}
+		if(type.equalsIgnoreCase("geometry")) {
+			return "geometry";
+		}
+		return "varchar(50)";
 	}
 
 }
