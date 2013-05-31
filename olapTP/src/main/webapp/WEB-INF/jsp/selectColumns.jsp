@@ -1,6 +1,7 @@
 <%@ include file="header.jsp"%>
 <div id="content">
 <h2>Seleccione las columnas correspondientes de la tabla <c:out value="${uniqueTable}" /></h2>
+<p>Los datos se muestran de la forma: "NombreDimension_NombreNivel_NombrePropiedad" correspondientes a los nombres el multidim proporcionado, a excepción de las métricas que se muestran diréctamente con el nombre original en el multidim.</p>
 <p><c:out value="${message}" /></p>
 	<form action="manageSelectedColumns" method="POST">
 		<fieldset id="marcoLogin">

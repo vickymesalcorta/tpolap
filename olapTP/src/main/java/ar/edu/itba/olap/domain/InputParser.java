@@ -1,36 +1,29 @@
 package ar.edu.itba.olap.domain;
 
 import java.io.File;
-import java.io.StringWriter;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class InputParser {
 
-	public static void main(String[] args) {
-        InputParser ip = new InputParser();
-        MultiDim multidim = ip.getMultiDim(new File("input.xml"));
-		List<Column> columns = multidim.getColumns();
-		System.out.println("Columns:"+'\n');
+//	public static void main(String[] args) {
+//        InputParser ip = new InputParser();
+//        MultiDim multidim = ip.getMultiDim("input.xml");
+//		List<Column> columns = multidim.getColumns();
+//		System.out.println("Columns:"+'\n');
 //		for(String s: columns){
 //			System.out.println(s + '\n');
 //		}
 //		System.out.println(multidim);
-		
-        
-    }
+//		
+//        
+//    }
 
 	public static org.w3c.dom.Document loadXMLFrom(String xml)
 			throws org.xml.sax.SAXException, java.io.IOException {
@@ -52,8 +45,8 @@ public class InputParser {
 		return doc;
 	}
 
-	public MultiDim getMultiDim(File input) {
-
+	public MultiDim getMultiDim(String inputPath) {
+		File input = new File(inputPath);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder;
 		Document doc;

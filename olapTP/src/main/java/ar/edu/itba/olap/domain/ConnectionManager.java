@@ -33,7 +33,7 @@ public class ConnectionManager {
 			password = properties.getProperty("password");
 			connectionString = properties.getProperty("connectionString");
 		} catch (IOException e) { 
-			throw new DatabaseException();
+			throw new DatabaseException(e.getMessage());
 		}
 	}
 	
@@ -42,7 +42,7 @@ public class ConnectionManager {
 			connection = DriverManager.getConnection(connectionString, username, password);
 			connection.setAutoCommit(false);
 		} catch (SQLException e) {
-			throw new DatabaseException();
+			throw new DatabaseException(e.getMessage());
 		}
 		return connection;
 	}
@@ -56,7 +56,7 @@ public class ConnectionManager {
 		}
 		catch(Exception e)
 		{
-			throw new DatabaseException();
+			throw new DatabaseException(e.getMessage());
 		}
 	}
 }

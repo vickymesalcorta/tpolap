@@ -10,11 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ar.edu.itba.olap.domain.Api;
+import ar.edu.itba.olap.domain.ApiImpl;
 import ar.edu.itba.olap.domain.Column;
 import ar.edu.itba.olap.domain.MultiDim;
 import ar.edu.itba.olap.domain.MultiDimToTablesDictionary;
 import ar.edu.itba.olap.domain.MultiDimToTablesDictionaryImpl;
-import ar.edu.itba.olap.domain.OutputGenerator;
 
 @SuppressWarnings("serial")
 public class ManageSelectedColumns extends HttpServlet{
@@ -26,7 +27,6 @@ public class ManageSelectedColumns extends HttpServlet{
 	
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-		req.setAttribute("message", "Su archivo esta listo");
 		HttpSession session = req.getSession();
 		String tableName = (String) session.getAttribute("uniqueTable");
 		
@@ -44,31 +44,36 @@ public class ManageSelectedColumns extends HttpServlet{
 		
 		MultiDim multidim = (MultiDim) session.getAttribute("multidim");
 		
-		OutputGenerator outputGenerator = new OutputGenerator();
-		outputGenerator.generateOutput(columnsInTable, multidim, tableName);
+		Api api = ApiImpl.getInstance();
+		api.generateOutput("src/main/resources/geomondrian.xml", columnsInTable, multidim, tableName);
 		
-		//TODO chequear los tipos
 		if(typesAreWrong(multidimColumns, databaseColumns, columnsInTable)) {
 			String msg = "Los tipos de las columnas seleccionadas no coinciden con los de la base de datos. Su archivo fue creado, sin embargo puede no funcionar.";
 			req.setAttribute("columnTypeWrong", msg);
+		} else {
+			req.setAttribute("columnTypeWrong", "");
 		}
+		
+		req.setAttribute("message", "Su archivo está listo");
 		
 		req.getRequestDispatcher("/WEB-INF/jsp/manageSelectedColumns.jsp").forward(req, resp);
 	}
 	
 	private boolean typesAreWrong(List<Column> multidimColumns, List<Column> databaseColumns, List<MultiDimToTablesDictionary> dictionary) {
-		for(Column multidimColumn : multidimColumns) {
-			for(Column databaseColumn : databaseColumns) {
-				for(MultiDimToTablesDictionary dic : dictionary) {
-					if(dic.getMultidimName().equalsIgnoreCase(multidimColumn.getName()) 
-							&& dic.getColumnName().equalsIgnoreCase(databaseColumn.getName())) {
-						if(!typesAreEqual(multidimColumn.getType(), databaseColumn.getType())) {
-							return true;
+		for(MultiDimToTablesDictionary dic : dictionary) {
+			for(Column multidimColumn : multidimColumns) {
+				if(dic.getMultidimName().equalsIgnoreCase(multidimColumn.getName())) {
+					for(Column databaseColumn : databaseColumns) {
+						if(dic.getColumnName().equalsIgnoreCase(databaseColumn.getName())) {
+							if(!typesAreEqual(multidimColumn.getType(), databaseColumn.getType())) {
+								return true;
+							}
 						}
 					}
 				}
 			}
 		}
+	
 		return false;
 	}
 	
@@ -79,7 +84,7 @@ public class ManageSelectedColumns extends HttpServlet{
 			}
 		}
 		if(multidimType.equalsIgnoreCase("string")) {
-			if(!databaseType.equalsIgnoreCase("character_varying")) {
+			if(!databaseType.equalsIgnoreCase("character varying")) {
 				return false;
 			}
 		}
@@ -89,25 +94,10 @@ public class ManageSelectedColumns extends HttpServlet{
 			}
 		}
 		if(multidimType.equalsIgnoreCase("timestamp")) {
-			if(!databaseType.equalsIgnoreCase("timestamp")) {
+			if(!databaseType.startsWith("timestamp")) {
 				return false;
 			}
 		}
-//		if(multidimType.equalsIgnoreCase("")) {
-//			if(!databaseType.equalsIgnoreCase("")) {
-//				return false;
-//			}
-//		}
-//		if(multidimType.equalsIgnoreCase("")) {
-//			if(!databaseType.equalsIgnoreCase("")) {
-//				return false;
-//			}
-//		}
-//		if(multidimType.equalsIgnoreCase("")) {
-//			if(!databaseType.equalsIgnoreCase("")) {
-//				return false;
-//			}
-//		}
 		return true;
 	}
 

@@ -6,7 +6,17 @@ package ar.edu.itba.olap.domain.exceptions;
 @SuppressWarnings("serial")
 public class DatabaseException extends RuntimeException {
 
+	private String message;
+	
 	public DatabaseException() {
 		
+	}
+	
+	public DatabaseException(String message) {
+		this.message = message;
+	}
+	
+	public String getMessage() {
+		return this.message;
 	}
 }

@@ -13,6 +13,15 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>SelectTable</servlet-name>
+		<servlet-class>ar.edu.itba.olap.web.SelectTable</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SelectTable</servlet-name>
+		<url-pattern>/selectTable</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>SelectColumns</servlet-name>
 		<servlet-class>ar.edu.itba.olap.web.SelectColumns</servlet-class>
 	</servlet>

@@ -1,6 +1,5 @@
 package ar.edu.itba.olap.web;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,16 +8,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import ar.edu.itba.olap.dao.TablesDAO;
 import ar.edu.itba.olap.dao.impl.DatabaseTablesDAO;
+import ar.edu.itba.olap.domain.Api;
+import ar.edu.itba.olap.domain.ApiImpl;
 import ar.edu.itba.olap.domain.Column;
-import ar.edu.itba.olap.domain.InputParser;
 import ar.edu.itba.olap.domain.MultiDim;
 import ar.edu.itba.olap.domain.MultiDimToTablesDictionary;
 import ar.edu.itba.olap.domain.MultiDimToTablesDictionaryDummy;
-import ar.edu.itba.olap.domain.OutputGenerator;
 import ar.edu.itba.olap.domain.Table;
 
 @SuppressWarnings("serial")
@@ -28,26 +26,13 @@ public class CreateAutomaticOutput extends HttpServlet{
 		req.getRequestDispatcher("/WEB-INF/jsp/manageSelectedColumns.jsp").forward(req, resp);
 	}
 	
-	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		TablesDAO tablesDAO = DatabaseTablesDAO.getInstance();
 		
-		req.setAttribute("message", "Su archivo esta listo");
-		HttpSession session = req.getSession();
+		Api api = ApiImpl.getInstance();
 		
-		InputParser inputParser = new InputParser();
-		MultiDim multidim = inputParser.getMultiDim(new File("input.xml"));
+		MultiDim multidim = api.getMultiDim("src/main/resources/input.xml");
 		List<Column> multidimColumns = multidim.getColumns();
-		
-//		List<String> multidimNames = new LinkedList<String>();
-//		multidimNames.add("asdf1");
-//		multidimNames.add("asdf2");
-//		multidimNames.add("asdf3");
-//		multidimNames.add("asdf4");
-//		multidimNames.add("asdf5");
-//		multidimNames.add("asdf6");
-//		multidimNames.add("asdf7");
-//		multidimNames.add("asdf8");
 		
 		List<MultiDimToTablesDictionary> columnsInTable = new LinkedList<MultiDimToTablesDictionary>();
 		
@@ -58,14 +43,14 @@ public class CreateAutomaticOutput extends HttpServlet{
 		
 		req.setAttribute("columnsInTable", columnsInTable);
 		
-		//TODO: generate table with columns
 		String tableName = multidim.getCubos().get(0).getName();
 		Table table = createTable(tableName, multidimColumns);
 		
 		tablesDAO.createTable(table);
 		
-		OutputGenerator outputGenerator = new OutputGenerator();
-		outputGenerator.generateOutput(columnsInTable, multidim, "table");
+		api.generateOutput("src/main/resources/geomondrian.xml", columnsInTable, multidim, tableName);
+		
+		req.setAttribute("message", "Su archivo está listo");
 		
 		req.getRequestDispatcher("/WEB-INF/jsp/manageSelectedColumns.jsp").forward(req, resp);
 	}

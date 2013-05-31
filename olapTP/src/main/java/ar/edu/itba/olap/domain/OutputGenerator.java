@@ -1,9 +1,6 @@
 package ar.edu.itba.olap.domain;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -22,12 +19,12 @@ public class OutputGenerator {
 
 	public static void main(String[] args) {
 		InputParser ip = new InputParser();
-		MultiDim multidim = ip.getMultiDim(new File("input.xml"));
+		MultiDim multidim = ip.getMultiDim("input.xml");
 		OutputGenerator og = new OutputGenerator();
-		og.generateOutput(null, multidim, "tableName");
+		og.generateOutput("geomondrian.xml", null, multidim, "tableName");
 	}
 
-	public void generateOutput(List<MultiDimToTablesDictionary> multidimToTables, MultiDim multidim, String tableName) {
+	public void generateOutput(String outputPath, List<MultiDimToTablesDictionary> multidimToTables, MultiDim multidim, String tableName) {
 		Document document;
 		try {
 			document = DocumentBuilderFactory.newInstance()
@@ -114,7 +111,7 @@ public class OutputGenerator {
 			transformer.transform(new DOMSource(document), new StreamResult(writer));
 			String output = writer.getBuffer().toString().replaceAll("\n|\r", "");
 //			System.out.println(output);
-			FileWriter fw = new FileWriter(new File("geomondrian.xml"));
+			FileWriter fw = new FileWriter(new File(outputPath));
 			fw.write(output);
 			fw.close();
 		} catch (Exception e) {

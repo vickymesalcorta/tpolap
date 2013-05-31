@@ -42,7 +42,7 @@ public class DatabaseTablesDAO implements TablesDAO {
 			
 			manager.closeConnection();
 		} catch(Exception e){
-			throw new DatabaseException();
+			throw new DatabaseException(e.getMessage());
 		}
 		manager.closeConnection();
 		return tables;
@@ -85,7 +85,7 @@ public class DatabaseTablesDAO implements TablesDAO {
 			stmt.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new DatabaseException();
+			throw new DatabaseException(e.getMessage());
 		}
 		manager.closeConnection();
 	}
@@ -101,7 +101,7 @@ public class DatabaseTablesDAO implements TablesDAO {
 			stmt = conn.prepareStatement(query);
 			stmt.execute();
 		} catch (Exception e) {
-			throw new DatabaseException();
+			throw new DatabaseException(e.getMessage());
 		}
 		manager.closeConnection();
 	}
@@ -127,7 +127,7 @@ public class DatabaseTablesDAO implements TablesDAO {
 			
 			manager.closeConnection();
 		} catch(Exception e){
-			throw new DatabaseException();
+			throw new DatabaseException(e.getMessage());
 		}
 		manager.closeConnection();
 		return columns;
@@ -153,7 +153,7 @@ public class DatabaseTablesDAO implements TablesDAO {
 			
 			manager.closeConnection();
 		} catch(Exception e){
-			throw new DatabaseException();
+			throw new DatabaseException(e.getMessage());
 		}
 		manager.closeConnection();
 		return columns;

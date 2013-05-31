@@ -1,6 +1,5 @@
 package ar.edu.itba.olap.web;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -10,8 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import ar.edu.itba.olap.domain.Api;
+import ar.edu.itba.olap.domain.ApiImpl;
 import ar.edu.itba.olap.domain.Column;
-import ar.edu.itba.olap.domain.InputParser;
 import ar.edu.itba.olap.domain.MultiDim;
 import ar.edu.itba.olap.services.TablesServices;
 import ar.edu.itba.olap.services.impl.TablesServicesImpl;
@@ -38,25 +38,12 @@ public class SelectColumns extends HttpServlet{
 		
 		req.setAttribute("message", "Columnas de la tabla " + uniqueTable);
 		
-		InputParser inputParser = new InputParser();
-		MultiDim multidim = inputParser.getMultiDim(new File("input.xml"));
-//		List<String> multidimNames = multidim.getMultiDimNames();
+		Api api = ApiImpl.getInstance();
+		MultiDim multidim = api.getMultiDim("src/main/resources/input.xml");
 		
 		List<Column> multidimColumns = multidim.getColumns();
 		
-//		session.setAttribute("multidim", multidim);
-		
-		// Despues de procesar el de entrada, se pide una lista con todos los nombres de las columnas necesarios, ahora lo cableo para probar
-//		List<String> multidimNames = new LinkedList<String>();
-//		multidimNames.add("asdf1");
-//		multidimNames.add("asdf2");
-//		multidimNames.add("asdf3");
-//		multidimNames.add("asdf4");
-//		multidimNames.add("asdf5");
-//		multidimNames.add("asdf6");
-//		multidimNames.add("asdf7");
-//		multidimNames.add("asdf8");
-		
+		session.setAttribute("multidim", multidim);
 		req.setAttribute("multidimColumns", multidimColumns);
 		session.setAttribute("multidimColumns", multidimColumns);
 
