@@ -17,12 +17,12 @@ import org.w3c.dom.Element;
 
 public class OutputGenerator {
 
-	public static void main(String[] args) {
-		InputParser ip = new InputParser();
-		MultiDim multidim = ip.getMultiDim("input.xml");
-		OutputGenerator og = new OutputGenerator();
-		og.generateOutput("geomondrian.xml", null, multidim, "tableName");
-	}
+//	public static void main(String[] args) {
+//		InputParser ip = new InputParser();
+//		MultiDim multidim = ip.getMultiDim("input.xml");
+//		OutputGenerator og = new OutputGenerator();
+//		og.generateOutput("geomondrian.xml", null, multidim, "tableName");
+//	}
 
 	public void generateOutput(String outputPath, List<MultiDimToTablesDictionary> multidimToTables, MultiDim multidim, String tableName) {
 		Document document;

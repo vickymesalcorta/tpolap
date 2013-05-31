@@ -10,9 +10,9 @@
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
-<p>El archivo de configuración de la base de datos se encuentra en la carpeta src/main/resources, por favor introduzca en él el nombre de usuario, contraseña y url de la base de datos</p>
-<p>El archivo multidim de entrada se debe ubicar en la carpeta src/main/resources y debe llamarse "input.xml"</p>
-<p>El archivo geomondrian de salida lo encontrará en la carpeta src/main/resources y se llamará "geomondrian.xml"</p>
+<p>El archivo de configuración de la base de datos se encuentra en la carpeta OLAP\WEB-INF\classes y se llama setup.properties, por favor introduzca en él el nombre de usuario, contraseña y url de la base de datos</p>
+<p>El archivo multidim de entrada se debe ubicar en la raíz del servidor y se debe llamar "input.xml"</p>
+<p>El archivo geomondrian de salida lo encontrará en la carpeta raíz del servidor y se llamará "geomondrian.xml"</p>
 
 	<div id="content">
 	<form action="createAutomaticOutput" method="POST">

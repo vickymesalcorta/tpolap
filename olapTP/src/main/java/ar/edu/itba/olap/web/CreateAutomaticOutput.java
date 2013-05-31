@@ -31,7 +31,7 @@ public class CreateAutomaticOutput extends HttpServlet{
 		
 		Api api = ApiImpl.getInstance();
 		
-		MultiDim multidim = api.getMultiDim("src/main/resources/input.xml");
+		MultiDim multidim = api.getMultiDim("input.xml");
 		List<Column> multidimColumns = multidim.getColumns();
 		
 		List<MultiDimToTablesDictionary> columnsInTable = new LinkedList<MultiDimToTablesDictionary>();
@@ -48,7 +48,10 @@ public class CreateAutomaticOutput extends HttpServlet{
 		
 		tablesDAO.createTable(table);
 		
-		api.generateOutput("src/main/resources/geomondrian.xml", columnsInTable, multidim, tableName);
+//		URL input = getClass().getClassLoader().getResource("input.xml");
+//		String inputPath = input.toString();
+//		String path = inputPath.substring(0, inputPath.lastIndexOf("/"));
+		api.generateOutput("geomondrian.xml", columnsInTable, multidim, tableName);
 		
 		req.setAttribute("message", "Su archivo está listo");
 		

@@ -45,7 +45,7 @@ public class ManageSelectedColumns extends HttpServlet{
 		MultiDim multidim = (MultiDim) session.getAttribute("multidim");
 		
 		Api api = ApiImpl.getInstance();
-		api.generateOutput("src/main/resources/geomondrian.xml", columnsInTable, multidim, tableName);
+		api.generateOutput("geomondrian.xml", columnsInTable, multidim, tableName);
 		
 		if(typesAreWrong(multidimColumns, databaseColumns, columnsInTable)) {
 			String msg = "Los tipos de las columnas seleccionadas no coinciden con los de la base de datos. Su archivo fue creado, sin embargo puede no funcionar.";

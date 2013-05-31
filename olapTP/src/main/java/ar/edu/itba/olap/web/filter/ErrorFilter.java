@@ -29,7 +29,7 @@ public class ErrorFilter implements Filter {
 		
 		try {
 			chain.doFilter(req, resp);
-		} catch (RuntimeException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			req.setAttribute("error_message", "Ha ocurrido un error");
 			

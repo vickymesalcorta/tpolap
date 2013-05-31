@@ -39,7 +39,7 @@ public class SelectColumns extends HttpServlet{
 		req.setAttribute("message", "Columnas de la tabla " + uniqueTable);
 		
 		Api api = ApiImpl.getInstance();
-		MultiDim multidim = api.getMultiDim("src/main/resources/input.xml");
+		MultiDim multidim = api.getMultiDim("input.xml");
 		
 		List<Column> multidimColumns = multidim.getColumns();
 		
