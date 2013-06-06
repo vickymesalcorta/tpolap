@@ -17,12 +17,12 @@ import org.w3c.dom.Element;
 
 public class OutputGenerator {
 
-//	public static void main(String[] args) {
-//		InputParser ip = new InputParser();
-//		MultiDim multidim = ip.getMultiDim("input.xml");
-//		OutputGenerator og = new OutputGenerator();
-//		og.generateOutput("geomondrian.xml", null, multidim, "tableName");
-//	}
+	public static void main(String[] args) {
+		InputParser ip = new InputParser();
+		MultiDim multidim = ip.getMultiDim("input.xml");
+		OutputGenerator og = new OutputGenerator();
+		og.generateOutput("geomondrian.xml", null, multidim, "tableName");
+	}
 
 	public void generateOutput(String outputPath, List<MultiDimToTablesDictionary> multidimToTables, MultiDim multidim, String tableName) {
 		Document document;
@@ -87,6 +87,33 @@ public class OutputGenerator {
 							}
 							hierarchyElement.appendChild(levelElement);
 						}
+						dimElement.appendChild(hierarchyElement);
+					}
+					if(dim.getHierachies().size() == 0){
+						Element hierarchyElement = document.createElement("Hierarchy");
+						hierarchyElement.setAttribute("name", dim.getName());
+						hierarchyElement.setAttribute("hasAll", "true");
+						if(dim.getLevels().isEmpty()){
+							throw new IllegalArgumentException("El numero de niveles en " + dim.getName() + " fuera de jerarquias es 0 ");
+						}
+						Level firstLevel = dim.getLevels().get(0);
+						Element firstLevelElement = document.createElement("Level");
+						for(Property prop : firstLevel.getProperties()){
+							if(prop.isId()){
+								String firstLevelColName = getColumnName(multidimToTables, dimUsage.getName()+"_"+firstLevel.getName()+"_"+prop.getName());
+								firstLevelElement.setAttribute("name" , firstLevelColName);
+								firstLevelElement.setAttribute("column" , firstLevelColName);
+								firstLevelElement.setAttribute("type", makeFirstCharUpper(prop.getType()));
+							}else{
+								String propColName = getColumnName(multidimToTables, dimUsage.getName()+"_"+firstLevel.getName()+"_"+prop.getName());
+								Element propElement = document.createElement("Property");
+								propElement.setAttribute("name" , propColName);
+								propElement.setAttribute("column" , propColName);
+								propElement.setAttribute("type", makeFirstCharUpper(prop.getType()));
+								firstLevelElement.appendChild(propElement);
+							}
+						}
+						hierarchyElement.appendChild(firstLevelElement);
 						dimElement.appendChild(hierarchyElement);
 					}
 					cuboElement.appendChild(dimElement);
