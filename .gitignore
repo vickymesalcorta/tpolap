@@ -5,4 +5,4 @@ IssueTracker/target/
 *.class
 *~
 .metadata/
-.classpath
+olapTP/.classpath
