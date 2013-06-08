@@ -147,13 +147,13 @@ public class OutputGenerator {
 	}
 
 	private String getColumnName(List<MultiDimToTablesDictionary> multidimToTables, String multidimName) {
-		return multidimName;
-//		for(MultiDimToTablesDictionary dic : multidimToTables) {
-//			if(dic.getMultidimName().equalsIgnoreCase(multidimName)) {
-//				return dic.getColumnName();
-//			}
-//		}
-//		throw new IllegalArgumentException();
+//		return multidimName;
+		for(MultiDimToTablesDictionary dic : multidimToTables) {
+			if(dic.getMultidimName().equalsIgnoreCase(multidimName)) {
+				return dic.getColumnName();
+			}
+		}
+		throw new IllegalArgumentException();
 	}
 
 	private String makeFirstCharUpper(String actualName) {
