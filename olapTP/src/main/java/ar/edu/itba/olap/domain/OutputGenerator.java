@@ -85,7 +85,7 @@ public class OutputGenerator {
 									levelElement.appendChild(propElement);
 								}
 							}
-							hierarchyElement.appendChild(levelElement);
+							hierarchyElement.insertBefore(levelElement, hierarchyElement.getFirstChild());
 						}
 						dimElement.appendChild(hierarchyElement);
 					}
@@ -166,4 +166,5 @@ public class OutputGenerator {
 		}	
 		return name.toString();
 	}
+	
 }
